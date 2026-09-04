@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "dist/client"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# TanStack Start (Nitro) emits a Netlify function for SSR.
+# Static assets are served from dist/client; everything else falls through to SSR.
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/server"
+  status = 200
