@@ -34,12 +34,20 @@ const skillGroups = {
   Content: ["YouTube", "Short-form Content", "Technology Content", "Story-based Content"],
   Writing: ["Creative Writing", "Fiction", "Scripts", "Digital Publishing"],
 };
-const projects = [
-  ["AI PROJECT", "Your next intelligent build", "A space for an AI application, automation or creative experiment.", Bot],
-  ["WEBSITE", "A digital experience", "Showcase a responsive website or interactive product you have built.", Code2],
-  ["CONTENT", "Gandiv: Rudrapur ka Sach", "A serialized Hindi storytelling concept built around cinematic suspense.", Clapperboard],
-  ["WRITING", "Your next story", "Feature fiction, a script, article or original story concept here.", PenTool],
-];
+const projectIcons: Record<string, typeof Bot> = {
+  "ai-content-engine": Bot,
+  "portfolio-web-experience": Code2,
+  "gandiv-rudrapur-ka-sach": Clapperboard,
+};
+const projects = caseStudies.map((c) => ({
+  slug: c.slug,
+  cat: c.category.toUpperCase(),
+  title: c.title,
+  desc: c.tagline,
+  cover: c.cover,
+  Icon: projectIcons[c.slug] ?? PenTool,
+}));
+
 const process = [["01", "Imagine", "Start with an idea or problem."], ["02", "Explore", "Research and experiment with AI."], ["03", "Build", "Make the concept work."], ["04", "Create", "Shape its visual and narrative form."], ["05", "Refine", "Improve every meaningful detail."], ["06", "Launch", "Make it real and shareable."]];
 
 function SectionTitle({ kicker, title, copy }: { kicker: string; title: string; copy?: string }) {
