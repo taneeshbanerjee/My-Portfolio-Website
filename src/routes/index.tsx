@@ -1,24 +1,25 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUpRight, Bot, Braces, Clapperboard, Code2, FileText, Lightbulb, Menu, PenTool, Play, Sparkles, WandSparkles, X } from "lucide-react";
-import profileAsset from "../assets/mickey-profile.jpg.asset.json";
+import { ArrowDown, ArrowUpRight, Bot, Clapperboard, Code2, FileText, Menu, PenTool, Play, WandSparkles, X } from "lucide-react";
+import { caseStudies } from "@/lib/case-studies";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Mickey — AI Engineer, Creative Technologist & Content Creator" },
-      { name: "description", content: "Explore Mickey's work across AI engineering, modern websites, content creation, video editing, writing and digital storytelling." },
-      { property: "og:title", content: "Mickey — AI Engineer & Creative Technologist" },
+      { title: "Taneesh Banerjee — AI Engineer, Creative Technologist & Creator" },
+      { name: "description", content: "Explore Taneesh Banerjee's work across AI engineering, modern websites, content creation, video editing, writing and digital storytelling." },
+      { property: "og:title", content: "Taneesh Banerjee — AI Engineer & Creative Technologist" },
       { property: "og:description", content: "Building with AI. Creating with technology. Telling stories through content." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://taneeshbanerjee.lovable.app/" }],
   }),
 });
 
 const nav = ["Home", "About", "Skills", "Projects", "Content", "Writing", "Contact"];
+
 const expertise = [
   ["01", "AI Engineering", "Building with generative AI, prompt engineering, automation and intelligent creative workflows.", ["AI-powered apps", "AI automation", "Generative AI", "Content pipelines"]],
   ["02", "Web Development", "Crafting responsive, interactive websites and modern interfaces where technology serves the idea.", ["React", "Responsive UI", "Landing pages", "AI web experiences"]],
