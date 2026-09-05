@@ -1,24 +1,25 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUpRight, Bot, Braces, Clapperboard, Code2, FileText, Lightbulb, Menu, PenTool, Play, Sparkles, WandSparkles, X } from "lucide-react";
-import profileAsset from "../assets/mickey-profile.jpg.asset.json";
+import { ArrowDown, ArrowUpRight, Bot, Clapperboard, Code2, FileText, Menu, PenTool, Play, WandSparkles, X } from "lucide-react";
+import { caseStudies } from "@/lib/case-studies";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Mickey — AI Engineer, Creative Technologist & Content Creator" },
-      { name: "description", content: "Explore Mickey's work across AI engineering, modern websites, content creation, video editing, writing and digital storytelling." },
-      { property: "og:title", content: "Mickey — AI Engineer & Creative Technologist" },
+      { title: "Taneesh Banerjee — AI Engineer, Creative Technologist & Creator" },
+      { name: "description", content: "Explore Taneesh Banerjee's work across AI engineering, modern websites, content creation, video editing, writing and digital storytelling." },
+      { property: "og:title", content: "Taneesh Banerjee — AI Engineer & Creative Technologist" },
       { property: "og:description", content: "Building with AI. Creating with technology. Telling stories through content." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://taneeshbanerjee.lovable.app/" }],
   }),
 });
 
 const nav = ["Home", "About", "Skills", "Projects", "Content", "Writing", "Contact"];
+
 const expertise = [
   ["01", "AI Engineering", "Building with generative AI, prompt engineering, automation and intelligent creative workflows.", ["AI-powered apps", "AI automation", "Generative AI", "Content pipelines"]],
   ["02", "Web Development", "Crafting responsive, interactive websites and modern interfaces where technology serves the idea.", ["React", "Responsive UI", "Landing pages", "AI web experiences"]],
@@ -33,12 +34,20 @@ const skillGroups = {
   Content: ["YouTube", "Short-form Content", "Technology Content", "Story-based Content"],
   Writing: ["Creative Writing", "Fiction", "Scripts", "Digital Publishing"],
 };
-const projects = [
-  ["AI PROJECT", "Your next intelligent build", "A space for an AI application, automation or creative experiment.", Bot],
-  ["WEBSITE", "A digital experience", "Showcase a responsive website or interactive product you have built.", Code2],
-  ["CONTENT", "Gandiv: Rudrapur ka Sach", "A serialized Hindi storytelling concept built around cinematic suspense.", Clapperboard],
-  ["WRITING", "Your next story", "Feature fiction, a script, article or original story concept here.", PenTool],
-];
+const projectIcons: Record<string, typeof Bot> = {
+  "ai-content-engine": Bot,
+  "portfolio-web-experience": Code2,
+  "gandiv-rudrapur-ka-sach": Clapperboard,
+};
+const projects = caseStudies.map((c) => ({
+  slug: c.slug,
+  cat: c.category.toUpperCase(),
+  title: c.title,
+  desc: c.tagline,
+  cover: c.cover,
+  Icon: projectIcons[c.slug] ?? PenTool,
+}));
+
 const process = [["01", "Imagine", "Start with an idea or problem."], ["02", "Explore", "Research and experiment with AI."], ["03", "Build", "Make the concept work."], ["04", "Create", "Shape its visual and narrative form."], ["05", "Refine", "Improve every meaningful detail."], ["06", "Launch", "Make it real and shareable."]];
 
 function SectionTitle({ kicker, title, copy }: { kicker: string; title: string; copy?: string }) {
@@ -58,12 +67,12 @@ function Index() {
   return (
     <div className="relative bg-background text-foreground">
       <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden"><div className="ambient absolute -left-40 top-20 h-[32rem] w-[32rem] rounded-full bg-primary/10 blur-[120px]"/><div className="ambient absolute -right-48 top-[40rem] h-[36rem] w-[36rem] rounded-full bg-accent/10 blur-[140px]"/><div className="absolute inset-0 opacity-[.035] [background-image:radial-gradient(var(--color-foreground)_1px,transparent_1px)] [background-size:32px_32px]"/></div>
-      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4"><nav aria-label="Main navigation" className="glass-panel mx-auto flex h-16 max-w-6xl items-center justify-between rounded-lg border border-border px-5 shadow-2xl"><a href="#home" className="font-display text-xl font-bold">M<span className="text-primary">.</span></a><div className="hidden items-center gap-7 md:flex">{nav.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className={`text-xs transition-colors ${active === item ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}>{item}</a>)}</div><button type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)} className="text-foreground md:hidden">{open ? <X/> : <Menu/>}</button></nav>{open && <div className="glass-panel mx-auto mt-2 grid max-w-6xl gap-1 rounded-lg border border-border p-3 md:hidden">{nav.map((item) => <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setOpen(false)} className="rounded-md px-4 py-3 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground">{item}</a>)}</div>}</header>
+      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4"><nav aria-label="Main navigation" className="glass-panel mx-auto flex h-16 max-w-6xl items-center justify-between rounded-lg border border-border px-5 shadow-2xl"><a href="#home" className="font-display text-xl font-bold">T<span className="text-primary">.</span></a><div className="hidden items-center gap-7 md:flex">{nav.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className={`text-xs transition-colors ${active === item ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}>{item}</a>)}<Link to="/blog" className="text-xs text-muted-foreground transition-colors hover:text-primary">Blog</Link></div><button type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)} className="text-foreground md:hidden">{open ? <X/> : <Menu/>}</button></nav>{open && <div className="glass-panel mx-auto mt-2 grid max-w-6xl gap-1 rounded-lg border border-border p-3 md:hidden">{nav.map((item) => <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setOpen(false)} className="rounded-md px-4 py-3 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground">{item}</a>)}<Link to="/blog" onClick={() => setOpen(false)} className="rounded-md px-4 py-3 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground">Blog</Link></div>}</header>
 
       <main className="relative z-10">
         <section id="home" data-label="Home" className="mx-auto grid min-h-[min(900px,100svh)] max-w-7xl items-center gap-14 px-6 pb-16 pt-28 lg:grid-cols-[1.12fr_.88fr] lg:px-10">
           <div className="order-2 lg:order-1"><p className="mb-6 font-mono text-xs uppercase tracking-[.24em] text-primary">AI Engineer • Creative Technologist • Creator</p><h1 className="font-display text-6xl font-semibold leading-[.94] md:text-8xl xl:text-9xl">Building the future with <span className="text-gradient shimmer">AI, code & creativity.</span></h1><p className="mt-7 max-w-xl text-base leading-8 text-muted-foreground md:text-lg">I build intelligent digital experiences, websites and creative content by combining artificial intelligence, technology, storytelling and visual craft.</p><div className="mt-9 flex flex-wrap gap-3"><a href="#projects" className="group inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-bold text-primary-foreground transition-transform hover:-translate-y-1">Explore my work <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-1"/></a><a href="#contact" className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-6 py-3.5 text-sm font-bold transition-colors hover:border-primary">Let&apos;s connect <ArrowUpRight className="h-4 w-4"/></a></div></div>
-          <div className="order-1 mx-auto w-full max-w-[390px] lg:order-2"><div className="photo-float relative"><div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-primary/40 via-transparent to-accent/40 blur-2xl"/><div className="glow-border relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-primary/40 bg-card p-2"><img src={profileAsset.url} alt="Mickey, AI engineer and creative technologist" className="h-full w-full rounded-[1.35rem] object-cover object-[50%_28%]" fetchPriority="high"/></div><div className="glass-panel absolute -bottom-5 -left-5 rounded-lg border border-border px-4 py-3"><p className="font-mono text-[10px] uppercase tracking-[.2em] text-muted-foreground">Based at the intersection of</p><p className="mt-1 text-sm font-semibold">Technology × Creativity</p></div></div></div>
+          <div className="order-1 mx-auto w-full max-w-[390px] lg:order-2"><div className="photo-float relative"><div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-primary/40 via-transparent to-accent/40 blur-2xl"/><div className="glow-border relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-primary/40 bg-card p-2"><img src="/images/taneesh-profile.jpg" alt="Taneesh Banerjee, AI engineer and creative technologist" className="h-full w-full rounded-[1.35rem] object-cover object-[50%_28%]" fetchPriority="high"/></div><div className="glass-panel absolute -bottom-5 -left-5 rounded-lg border border-border px-4 py-3"><p className="font-mono text-[10px] uppercase tracking-[.2em] text-muted-foreground">Based at the intersection of</p><p className="mt-1 text-sm font-semibold">Technology × Creativity</p></div></div></div>
         </section>
 
         <section id="about" data-label="About" className="border-y border-border bg-card/30 px-6 py-24 md:py-32"><div className="mx-auto max-w-6xl"><SectionTitle kicker="01 / About me" title="I don't just consume technology. I build with it."/><div className="grid gap-10 md:grid-cols-[.7fr_1.3fr]"><div className="reveal font-display text-2xl leading-relaxed text-primary">Curious by nature.<br/>Technical by practice.<br/>Creative by instinct.</div><div className="reveal space-y-5 text-lg leading-9 text-muted-foreground"><p>I&apos;m Mickey—a multidisciplinary creator exploring what happens when artificial intelligence, thoughtful technology and human imagination work together.</p><p>My interests move fluidly from AI-powered workflows and modern websites to YouTube, video editing, fiction, scripts and digital storytelling. The medium changes; the intention stays the same: turn ideas into experiences people can see, feel and use.</p></div></div></div></section>
@@ -72,7 +81,17 @@ function Index() {
 
         <section id="skills" data-label="Skills" className="border-y border-border bg-card/30 px-6 py-24 md:py-32"><div className="mx-auto max-w-6xl"><SectionTitle kicker="03 / Skills" title="A connected creative toolkit."/><div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-2 lg:grid-cols-3">{Object.entries(skillGroups).map(([group, skills]) => <div key={group} className="reveal bg-background p-7"><h3 className="mb-6 font-display text-xl text-primary">{group}</h3><div className="flex flex-wrap gap-2">{skills.map(skill => <span key={skill} className="rounded-md bg-secondary px-3 py-2 text-xs text-secondary-foreground">{skill}</span>)}</div></div>)}</div></div></section>
 
-        <section id="projects" data-label="Projects" className="mx-auto max-w-6xl px-6 py-24 md:py-32"><SectionTitle kicker="04 / Selected work" title="Ideas, made tangible." copy="Editable spaces for real projects across AI, websites, content, video and writing."/><div className="grid gap-5 md:grid-cols-2">{projects.map(([cat,title,desc,Icon], i) => { const I = Icon as typeof Bot; return <article key={title as string} className={`reveal group overflow-hidden rounded-lg border border-border bg-card transition-all duration-500 hover:-translate-y-2 hover:border-primary ${i===0 ? "md:col-span-2" : ""}`}><div className={`relative grid place-items-center overflow-hidden bg-secondary ${i===0 ? "aspect-[2/1] md:aspect-[3/1]" : "aspect-[5/3]"}`}><I className="h-16 w-16 text-primary/60 transition-transform duration-500 group-hover:scale-110"/><div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100"/></div><div className="p-6"><p className="font-mono text-[10px] tracking-[.25em] text-primary">{cat as string}</p><div className="mt-3 flex items-start justify-between gap-4"><div><h3 className="font-display text-2xl font-semibold">{title as string}</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">{desc as string}</p></div><ArrowUpRight className="mt-1 h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"/></div><span className="mt-5 inline-block text-xs font-semibold">View project</span></div></article>})}</div></section>
+        <section id="projects" data-label="Projects" className="mx-auto max-w-6xl px-6 py-24 md:py-32"><SectionTitle kicker="04 / Selected work" title="Ideas, made tangible." copy="Case studies across AI engineering, web development and serialized storytelling."/><div className="grid gap-5 md:grid-cols-2">{projects.map(({ slug, cat, title, desc, cover, Icon }, i) => (
+          <Link key={slug} to="/work/$slug" params={{ slug }} className={`reveal group overflow-hidden rounded-lg border border-border bg-card transition-all duration-500 hover:-translate-y-2 hover:border-primary ${i===0 ? "md:col-span-2" : ""}`}>
+            <div className={`relative grid place-items-center overflow-hidden bg-secondary ${i===0 ? "aspect-[2/1] md:aspect-[3/1]" : "aspect-[5/3]"}`}>
+              <img src={cover} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-105"/>
+              <Icon className="relative h-14 w-14 text-primary drop-shadow-[0_0_18px_var(--color-primary)] transition-transform duration-500 group-hover:scale-110"/>
+              <div className="absolute inset-0 bg-gradient-to-t from-background/85 to-transparent"/>
+            </div>
+            <div className="p-6"><p className="font-mono text-[10px] tracking-[.25em] text-primary">{cat}</p><div className="mt-3 flex items-start justify-between gap-4"><div><h3 className="font-display text-2xl font-semibold">{title}</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">{desc}</p></div><ArrowUpRight className="mt-1 h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"/></div><span className="mt-5 inline-block text-xs font-semibold text-primary">Read the case study</span></div>
+          </Link>
+        ))}</div></section>
+
 
         <section id="content" data-label="Content" className="overflow-hidden border-y border-border bg-card/30 px-6 py-24 md:py-32"><div className="mx-auto max-w-6xl"><SectionTitle kicker="05 / Content & film" title="Stories engineered for attention."/><div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr]"><div className="reveal relative min-h-[430px] overflow-hidden rounded-lg border border-border bg-secondary p-8 md:p-12"><Clapperboard className="absolute -bottom-10 -right-8 h-64 w-64 text-primary/10"/><p className="font-mono text-xs tracking-[.22em] text-accent">SERIALIZED HINDI STORYTELLING</p><h3 className="mt-5 max-w-lg font-display text-4xl font-semibold md:text-6xl">Gandiv:<br/><span className="text-gradient">Rudrapur ka Sach</span></h3><p className="mt-6 max-w-xl leading-8 text-muted-foreground">A cinematic, serialized story concept shaped through suspense, character, visual imagination and episodic narrative.</p><button type="button" className="mt-10 inline-flex h-12 w-12 items-center justify-center rounded-full border border-primary text-primary" aria-label="Play sample placeholder"><Play className="h-4 w-4 fill-current"/></button></div><div className="grid gap-4">{[[WandSparkles,"AI + ideas","Using intelligent tools to explore concepts and accelerate creative workflows."],[FileText,"Words + voice","Turning scripts and ideas into clear narratives with a distinct point of view."],[Clapperboard,"Visuals + edit","Combining footage, music, sound and pacing into a complete experience."]].map(([Icon,title,desc]) => { const I=Icon as typeof Bot; return <div key={title as string} className="reveal glass-panel rounded-lg border border-border p-6"><I className="h-6 w-6 text-primary"/><h3 className="mt-5 font-display text-xl font-semibold">{title as string}</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">{desc as string}</p></div>})}</div></div></div></section>
 
